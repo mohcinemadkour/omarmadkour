@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+        <meta charset="utf-8" />
+        <title>Install and cofigure Spark, Kafka, Cassandra, Zookeper</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">omar takaji's blog </a></h1>
+                <nav><ul>
+                    <li><a href="/pages/Quote of the Day.html">Quote of the Day</a></li>
+                    <li><a href="/category/data-science-learning.html">Data science Learning</a></li>
+                    <li><a href="/category/misc.html">misc</a></li>
+                    <li><a href="/category/r-data-tydying.html">R, Data Tydying</a></li>
+                    <li><a href="/category/r-data-visualization.html">R, Data Visualization</a></li>
+                    <li><a href="/category/r-leaflet.html">R, Leaflet</a></li>
+                    <li class="active"><a href="/category/real-time.html">Real Time</a></li>
+                    <li><a href="/category/semantic-web.html">Semantic Web</a></li>
+                    <li><a href="/category/temporal-data.html">Temporal data</a></li>
+                    <li><a href="/category/tools.html">tools</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/Apache.html" rel="bookmark"
+           title="Permalink to Install and cofigure Spark, Kafka, Cassandra, Zookeper">Install and cofigure Spark, Kafka, Cassandra, Zookeper</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-01-12T16:00:00+00:00">
+                Published: Thu 12 January 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/mohcine-madkour.html">Mohcine Madkour</a>
+        </address>
+<p>In <a href="/category/real-time.html">Real Time</a>.</p>
+<p>tags: <a href="/tag/apache.html">Apache</a> </p>
+</footer><!-- /.post-info -->      <h1>Anaconda</h1>
+<div class="highlight"><pre><span></span>export PATH=&quot;/home/mohcine/anaconda2/bin:$PATH&quot;
+</pre></div>
+
+
+<h1>Spark:</h1>
+<div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">snotebook</span> <span class="p">()</span>
+<span class="p">{</span>
+<span class="nx">SPARK_PATH</span><span class="o">=</span><span class="err">/home/mohcine/Sofwares/spark-2.2.0-bin-hadoop2.7</span>
+<span class="kr">export</span> <span class="nx">PYSPARK_DRIVER_PYTHON</span><span class="o">=</span><span class="s2">&quot;jupyter&quot;</span>
+<span class="kr">export</span> <span class="nx">PYSPARK_DRIVER_PYTHON_OPTS</span><span class="o">=</span><span class="s2">&quot;notebook&quot;</span>
+<span class="nx">$SPARK_PATH</span><span class="o">/</span><span class="nx">bin</span><span class="o">/</span><span class="nx">pyspark</span> <span class="o">--</span><span class="nx">master</span> <span class="nx">local</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<h1>Zookeper:</h1>
+<div class="highlight"><pre><span></span>sudo apt-get install zookeeperd,   
+Check if it is running
+netstat -ant | grep :2181
+</pre></div>
+
+
+<h1>Kafka:</h1>
+<p>download kafka on the location : /opt</p>
+<div class="highlight"><pre><span></span>Start server: 
+sudo  /opt/kafka/bin/kafka-server-start.sh /opt/kafka/config/server.properties
+</pre></div>
+
+
+<p>Start the Kafka server as a background process:</p>
+<div class="highlight"><pre><span></span>sudo  /opt/kafka/bin/kafka-server-start.sh /opt/kafka/config/server.properties  /tmp/kafka.log 2&gt;&amp;1 &amp;
+</pre></div>
+
+
+<p>Testing server</p>
+<div class="highlight"><pre><span></span>sudo /opt/kafka/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1  --partitions 1 --topic testing
+</pre></div>
+
+
+<p>Ask Zookeeper to list available topics on Apache Kafka</p>
+<div class="highlight"><pre><span></span>sudo /opt/kafka/bin/kafka-topics.sh --list --zookeeper localhost:2181
+</pre></div>
+
+
+<p>Publish a sample messages to Apache Kafka topic called testing by using the following producer command</p>
+<div class="highlight"><pre><span></span>sudo /opt/kafka/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic testing
+</pre></div>
+
+
+<p>Use consumer command to check for messages on Apache Kafka Topic called testing</p>
+<div class="highlight"><pre><span></span>sudo /opt/kafka/bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic testing --from-beginning
+</pre></div>
+
+
+<h1>Cassandra:</h1>
+<div class="highlight"><pre><span></span>export CASSANDRA_HOME=/opt/apache-cassandra-3.11.1
+export PATH=$CASSANDRA_HOME/bin:$PATH
+    &gt;cd $CASSANDRA_HOME/bin
+    &gt;casandra
+    &gt;cqlsh
+</pre></div>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>
